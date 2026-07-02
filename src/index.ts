@@ -270,9 +270,10 @@ function setRootClasses() {
 }
 
 function onInstanceDeactivated(reason: InstanceDeactivateReason) {
-  const onVersionClick = () => {
+  if(reason === 'version') {
     appRuntimeManager.reload();
-  };
+    return;
+  }
 
   const onTabsClick = () => {
     document.body.classList.add('deactivated-backwards');
@@ -290,16 +291,11 @@ function onInstanceDeactivated(reason: InstanceDeactivateReason) {
 
   const onOtherClientClick = onTabsClick;
 
-  const map: {[key in InstanceDeactivateReason]: {
+  const map: {[key in Exclude<InstanceDeactivateReason, 'version'>]: {
     title: LangPackKey,
     subtitle: LangPackKey,
     onClick: () => void
   }} = {
-    version: {
-      title: 'Deactivated.Version.Title',
-      subtitle: 'Deactivated.Version.Subtitle',
-      onClick: onVersionClick
-    },
     tabs: {
       title: 'Deactivated.Title',
       subtitle: 'Deactivated.Subtitle',
@@ -312,7 +308,6 @@ function onInstanceDeactivated(reason: InstanceDeactivateReason) {
     }
   };
 
-  const isUpdated = reason === 'version';
   const popup = PopupElement.createPopup(PopupElement, 'popup-instance-deactivated', {overlayClosable: true});
   const c = document.createElement('div');
   c.classList.add('instance-deactivated-container');
