@@ -45,13 +45,13 @@ export function constructTelegramWebSocketUrl(dcId: DcId, connectionType: Connec
     return;
   }
 
-  return 'ws://31.77.147.69:30444/apiws';
+  return 'ws://31.77.147.69:20443/apiws';
 }
 
 export class DcConfigurator {
   private sslSubdomains = ['pluto', 'venus', 'aurora', 'vesta', 'flora'];
 
-  private dcOptions = [{id: 1, host: '31.77.147.69',  port: 30444}];
+  private dcOptions = [{id: 1, host: '31.77.147.69',  port: 20443}];
 
   public chosenServers: Servers = {} as any;
 
